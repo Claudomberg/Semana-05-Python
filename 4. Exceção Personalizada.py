@@ -1,19 +1,21 @@
-class IdadeInvalidaError(Exception):
-    """Exceção lançada quando a idade informada está fora do limite permitido (ex: menores de 18)."""
-    def __init__(self, idade_informada, mensagem="Acesso negado: Usuário menor de idade."):
-        self.idade_informada = idade_informada
-        self.mensagem = f"{mensagem} (Idade informada: {self.idade_informada})"
-        super().__init__(self.mensagem)
+class FormatoInvalidoError(Exception):
+    "Erro lançado quando o CPF está em formato inválido."
+    pass
 
-def registrar_cliente(nome, idade):
-    print(f"\nTentando registrar: {nome}...")
-    if idade < 18:
-        raise IdadeInvalidaError(idade)
-    print("Cliente registrado com sucesso!")
+def validar_cpf(cpf):
+    import re
 
-# Bloco de execução para capturar a exceção personalizada
+    padrao = r'\d{3}\.\d{3}\.\d{3}-\d{2}'
+
+    if not re.fullmatch(padrao, cpf):
+        raise FormatoInvalidoError(
+            f"CPF '{cpf}' está em formato inválido. "
+            "Use 123.456.789-00."
+        )
+
+    print("Formato do CPF válido!")
+
 try:
-    registrar_cliente("Carlos", 25)  # Funciona
-    registrar_cliente("Ana", 16)     # Dispara o IdadeInvalidaError
-except IdadeInvalidaError as erro:
-    print(f"[ERRO DE NEGÓCIO] {erro}")
+    validar_cpf("12345678900")
+except FormatoInvalidoError as erro:
+    print(f"[ERRO DE FORMATO] {erro}")
