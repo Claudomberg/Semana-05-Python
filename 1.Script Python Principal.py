@@ -16,3 +16,5 @@ with open(nome_do_arquivo, 'r', encoding='utf-8') as arquivo:
 print("=== Dados Extraídos do Arquivo ===")
 for registro in registros_lidos:
     print(registro)
+    
+#os.remove(nome_do_arquivo)
