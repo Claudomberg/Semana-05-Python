@@ -1,35 +1,33 @@
-# Dados simulados após a etapa de validação
 dados_processados = {
     "total": 150,
     "validos": 132,
-    "invalidos": 18,
-    "erros_detalhados": [
-        {"linha": 12, "campo": "email", "motivo": "Falta caractere @"},
-        {"linha": 45, "campo": "cpf", "motivo": "Formato incorreto, sem traço"},
-        {"linha": 89, "campo": "data", "motivo": "Data futura não permitida"}
-    ]
+    "invalidos": 18
 }
 
-taxa_sucesso = (dados_processados["validos"] / dados_processados["total"]) * 100
+total = dados_processados["total"]
+validos = dados_processados["validos"]
+invalidos = dados_processados["invalidos"]
+
+taxa_aprovacao = (validos / total) * 100
+taxa_rejeicao = (invalidos / total) * 100
 
 print("=" * 60)
-# Centralizando o título em 60 caracteres
-print(f"{'RELATÓRIO DE HIGIENIZAÇÃO DE DADOS':^60}")
+print(f"{'RELATÓRIO FINAL DE VALIDAÇÃO DE DADOS':^60}")
 print("=" * 60)
 
-# Alinhando textos e limitando casas decimais
-print(f"Total de Registros  : {dados_processados['total']:<10}")
-print(f"Registros Válidos   : {dados_processados['validos']:<10}")
-print(f"Registros Inválidos : {dados_processados['invalidos']:<10}")
-print(f"Taxa de Aprovação   : {taxa_sucesso:.2f}%\n")
+print(f"{'Total de registros analisados:':<35} {total:>10}")
+print(f"{'Registros válidos:':<35} {validos:>10}")
+print(f"{'Registros inválidos:':<35} {invalidos:>10}")
 
 print("-" * 60)
-print("DETALHAMENTO DE REJEIÇÕES:")
+print(f"{'Taxa de aprovação:':<35} {taxa_aprovacao:>9.2f}%")
+print(f"{'Taxa de rejeição:':<35} {taxa_rejeicao:>9.2f}%")
 
-for erro in dados_processados["erros_detalhados"]:
-    # Alinhando à esquerda os campos para manter a tabela organizada
-    linha_format = f"Linha {erro['linha']:03d}"
-    campo_format = f"{erro['campo']:<8}"
-    print(f" -> {linha_format} | Campo: {campo_format} | Erro: {erro['motivo']}")
+print("=" * 60)
+
+if invalidos == 0:
+    print("Status: Todos os registros foram aprovados!")
+else:
+    print(f"Status: {invalidos} registros precisam de correção.")
 
 print("=" * 60)
